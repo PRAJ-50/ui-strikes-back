@@ -20,8 +20,6 @@
       color:var(--text);
       background: radial-gradient(1200px 600px at 10% 0%, #1b2a4a 0%, var(--bg1) 55%, var(--bg0) 100%);
     }
-    a{color:var(--muted); text-decoration:none}
-    a:hover{text-decoration:underline}
 
     .topbar{
       position:sticky; top:0; z-index:10;
@@ -52,173 +50,297 @@
     }
 
     .container{max-width:1100px; margin:0 auto; padding:18px 22px 44px}
-    .row{margin-top:18px}
-    .row-header{
-      display:flex; align-items:baseline; justify-content:space-between; gap:12px;
-    }
-    .row-title{font-size:18px; margin:0; letter-spacing:.2px}
-    .row-link{font-size:13px}
 
-    /* Horizontal card rail */
-    .rail{
-      margin-top:12px;
-      display:grid;
-      grid-auto-flow: column;
-      grid-auto-columns: minmax(220px, 1fr);
-      gap:14px;
-      overflow-x:auto;
-      padding-bottom:6px;
-      scroll-snap-type: x mandatory;
-    }
-    .card{
-      scroll-snap-align: start;
+    /* Expandable genre sections */
+    .genre{
+      margin-top:16px;
+      border:1px solid rgba(255,255,255,.10);
       border-radius:16px;
       overflow:hidden;
-      border:1px solid var(--stroke);
-      background: var(--card);
-      box-shadow: 0 18px 50px rgba(0,0,0,.35);
-      min-width:220px;
+      background: rgba(255,255,255,.03);
+      box-shadow: 0 18px 50px rgba(0,0,0,.25);
     }
-    .card-img{
-      height:135px;
-      background-size:cover;
-      background-position:center;
-      filter:saturate(1.1) contrast(1.05);
+    .genre > summary{
+      list-style:none;
+      cursor:pointer;
+      user-select:none;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      padding:14px 14px;
+      background: rgba(255,255,255,.02);
     }
-    .card-body{padding:12px}
-    .card-name{font-weight:700}
-    .card-meta{margin-top:4px; font-size:12px; opacity:.75}
+    .genre > summary::-webkit-details-marker{display:none}
 
-    /* Small screens */
+    .summary-left{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+    .thumb{
+      width:58px;
+      height:42px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.12);
+      overflow:hidden;
+      background: rgba(255,255,255,.06);
+      flex:0 0 auto;
+    }
+    .thumb img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    .genre-title{margin:0; font-size:16px; font-weight:750; letter-spacing:.2px}
+    .genre-sub{font-size:12px; color:var(--muted); margin-top:2px}
+
+    .chev{
+      width:36px; height:36px;
+      border-radius:999px;
+      display:grid; place-items:center;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      flex:0 0 auto;
+      transition: transform .2s ease;
+    }
+    details[open] .chev{ transform: rotate(180deg); }
+
+    .panel{
+      padding: 12px 14px 14px;
+      border-top:1px solid rgba(255,255,255,.08);
+      animation: fadeIn .18s ease;
+    }
+    @keyframes fadeIn{
+      from{opacity:.4; transform: translateY(-2px)}
+      to{opacity:1; transform: translateY(0)}
+    }
+
+    .songs{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .song{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      border-radius:14px;
+      padding:10px 10px;
+    }
+    .song-title{font-weight:700}
+    .song-meta{margin-top:4px; font-size:12px; color:var(--muted)}
+    @media (max-width:700px){
+      .songs{grid-template-columns: 1fr}
+    }
     @media (max-width:560px){
       .topbar{padding:14px 14px}
       .container{padding:14px 14px 34px}
       .brand-sub{display:none}
-      .rail{grid-auto-columns: minmax(190px, 1fr)}
     }
   </style>
 </head>
 
 <body>
-  <!-- Top bar with user's name on the top right -->
   <header class="topbar">
     <div class="brand">
       <div class="logo" aria-hidden="true"></div>
       <div>
         <div class="brand-title">Music Dashboard</div>
-        <div class="brand-sub">Browse by genre</div>
+        <div class="brand-sub">Click a genre to expand inline</div>
       </div>
     </div>
 
     <div class="user-area">
-      <!-- Change this text to the user's name -->
+      <!-- Put the user's name here -->
       <div class="user-name">Sam Taylor</div>
       <div class="avatar" aria-label="User avatar" role="img"></div>
     </div>
   </header>
 
   <main class="container">
-    <!-- Row 1 -->
-    <section class="row">
-      <div class="row-header">
-        <h2 class="row-title">Hip-Hop</h2>
-        <a class="row-link" href="#">View all</a>
+    <!--
+      IMPORTANT: Your “Trap” and “Indie Rock” images aren’t loading likely because remote URLs can break
+      (or be blocked by CSP / network). This version uses embedded SVG thumbnails (data URIs),
+      so it will always load offline with no external dependencies.
+    -->
+
+    <!-- HIP-HOP -->
+    <details class="genre">
+      <summary>
+        <div class="summary-left">
+          <div class="thumb">
+            <img alt="Hip-Hop thumbnail"
+              src="data:image/svg+xml;utf8,
+              <svg xmlns='http://www.w3.org/2000/svg' width='580' height='420'>
+                <defs>
+                  <linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>
+                    <stop stop-color='%237c3aed' offset='0'/>
+                    <stop stop-color='%2306b6d4' offset='1'/>
+                  </linearGradient>
+                </defs>
+                <rect width='100%25' height='100%25' fill='url(%23g)'/>
+                <circle cx='110' cy='210' r='70' fill='rgba(255,255,255,0.22)'/>
+                <rect x='210' y='120' width='300' height='50' rx='25' fill='rgba(255,255,255,0.22)'/>
+                <rect x='210' y='200' width='260' height='50' rx='25' fill='rgba(255,255,255,0.16)'/>
+                <text x='210' y='315' fill='rgba(255,255,255,0.85)' font-size='64' font-family='Arial' font-weight='700'>HIP-HOP</text>
+              </svg>" />
+          </div>
+          <div>
+            <p class="genre-title">Hip-Hop</p>
+            <div class="genre-sub">Saved favourites: 3 songs</div>
+          </div>
+        </div>
+        <div class="chev" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M6 9l6 6 6-6" stroke="rgba(234,240,255,.85)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </summary>
+      <div class="panel">
+        <div class="songs">
+          <div class="song"><div class="song-title">N.Y. State of Mind</div><div class="song-meta">Nas • Illmatic</div></div>
+          <div class="song"><div class="song-title">Alright</div><div class="song-meta">Kendrick Lamar • TPAB</div></div>
+          <div class="song"><div class="song-title">Ms. Jackson</div><div class="song-meta">OutKast • Stankonia</div></div>
+        </div>
       </div>
+    </details>
 
-      <div class="rail">
-        <article class="card">
-          <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=800&q=60')"></div>
-          <div class="card-body">
-            <div class="card-name">Boom Bap</div>
-            <div class="card-meta">Curated picks</div>
+    <!-- TRAP (embedded image so it loads) -->
+    <details class="genre">
+      <summary>
+        <div class="summary-left">
+          <div class="thumb">
+            <img alt="Trap thumbnail"
+              src="data:image/svg+xml;utf8,
+              <svg xmlns='http://www.w3.org/2000/svg' width='580' height='420'>
+                <defs>
+                  <linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>
+                    <stop stop-color='%23f97316' offset='0'/>
+                    <stop stop-color='%23ef4444' offset='0.55'/>
+                    <stop stop-color='%237c3aed' offset='1'/>
+                  </linearGradient>
+                </defs>
+                <rect width='100%25' height='100%25' fill='url(%23g)'/>
+                <path d='M0 300 C120 240 220 360 340 300 C430 255 500 285 580 260 L580 420 L0 420 Z' fill='rgba(0,0,0,0.18)'/>
+                <text x='40' y='270' fill='rgba(255,255,255,0.9)' font-size='84' font-family='Arial' font-weight='800'>TRAP</text>
+                <text x='42' y='330' fill='rgba(255,255,255,0.75)' font-size='34' font-family='Arial'>favourites inside</text>
+              </svg>" />
           </div>
-        </article>
-
-        <article class="card">
-          <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1521334726092-b509a19597c1?auto=format&fit=crop&w=800&q=60')"></div>
-          <div class="card-body">
-            <div class="card-name">Trap</div>
-            <div class="card-meta">Curated picks</div>
+          <div>
+            <p class="genre-title">Trap</p>
+            <div class="genre-sub">Saved favourites: 3 songs</div>
           </div>
-        </article>
-
-        <article class="card">
-          <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=800&q=60')"></div>
-          <div class="card-body">
-            <div class="card-name">Lo-fi</div>
-            <div class="card-meta">Curated picks</div>
-          </div>
-        </article>
+        </div>
+        <div class="chev" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M6 9l6 6 6-6" stroke="rgba(234,240,255,.85)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </summary>
+      <div class="panel">
+        <div class="songs">
+          <div class="song"><div class="song-title">Mask Off</div><div class="song-meta">Future • FUTURE</div></div>
+          <div class="song"><div class="song-title">Bad and Boujee</div><div class="song-meta">Migos • Culture</div></div>
+          <div class="song"><div class="song-title">goosebumps</div><div class="song-meta">Travis Scott • Birds in the Trap…</div></div>
+        </div>
       </div>
-    </section>
+    </details>
 
-    <!-- Row 2 -->
-    <section class="row">
-      <div class="row-header">
-        <h2 class="row-title">Electronic</h2>
-        <a class="row-link" href="#">View all</a>
+    <!-- ELECTRONIC -->
+    <details class="genre">
+      <summary>
+        <div class="summary-left">
+          <div class="thumb">
+            <img alt="Electronic thumbnail"
+              src="data:image/svg+xml;utf8,
+              <svg xmlns='http://www.w3.org/2000/svg' width='580' height='420'>
+                <defs>
+                  <linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>
+                    <stop stop-color='%2306b6d4' offset='0'/>
+                    <stop stop-color='%2322c55e' offset='1'/>
+                  </linearGradient>
+                </defs>
+                <rect width='100%25' height='100%25' fill='url(%23g)'/>
+                <g fill='rgba(255,255,255,0.22)'>
+                  <rect x='60' y='80' width='90' height='260' rx='18'/>
+                  <rect x='180' y='120' width='90' height='220' rx='18'/>
+                  <rect x='300' y='60' width='90' height='280' rx='18'/>
+                  <rect x='420' y='150' width='90' height='190' rx='18'/>
+                </g>
+                <text x='60' y='390' fill='rgba(255,255,255,0.9)' font-size='64' font-family='Arial' font-weight='800'>ELECTRONIC</text>
+              </svg>" />
+          </div>
+          <div>
+            <p class="genre-title">Electronic</p>
+            <div class="genre-sub">Saved favourites: 3 songs</div>
+          </div>
+        </div>
+        <div class="chev" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M6 9l6 6 6-6" stroke="rgba(234,240,255,.85)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </summary>
+      <div class="panel">
+        <div class="songs">
+          <div class="song"><div class="song-title">One More Time</div><div class="song-meta">Daft Punk • Discovery</div></div>
+          <div class="song"><div class="song-title">Strobe</div><div class="song-meta">deadmau5 • FLABN</div></div>
+          <div class="song"><div class="song-title">Windowlicker</div><div class="song-meta">Aphex Twin • Windowlicker</div></div>
+        </div>
       </div>
+    </details>
 
-      <div class="rail">
-        <article class="card">
-          <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=800&q=60')"></div>
-          <div class="card-body">
-            <div class="card-name">House</div>
-            <div class="card-meta">Curated picks</div>
+    <!-- INDIE ROCK (embedded image so it loads) -->
+    <details class="genre">
+      <summary>
+        <div class="summary-left">
+          <div class="thumb">
+            <img alt="Indie Rock thumbnail"
+              src="data:image/svg+xml;utf8,
+              <svg xmlns='http://www.w3.org/2000/svg' width='580' height='420'>
+                <defs>
+                  <linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>
+                    <stop stop-color='%2364748b' offset='0'/>
+                    <stop stop-color='%23111827' offset='1'/>
+                  </linearGradient>
+                </defs>
+                <rect width='100%25' height='100%25' fill='url(%23g)'/>
+                <g stroke='rgba(255,255,255,0.25)' stroke-width='10' fill='none'>
+                  <path d='M90 320 C140 190 190 190 240 320'/>
+                  <path d='M240 320 C290 190 340 190 390 320'/>
+                  <path d='M390 320 C440 190 490 190 540 320'/>
+                </g>
+                <text x='38' y='120' fill='rgba(234,240,255,0.92)' font-size='72' font-family='Arial' font-weight='800'>INDIE</text>
+                <text x='38' y='190' fill='rgba(234,240,255,0.85)' font-size='60' font-family='Arial' font-weight='800'>ROCK</text>
+              </svg>" />
           </div>
-        </article>
-
-        <article class="card">
-          <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=800&q=60')"></div>
-          <div class="card-body">
-            <div class="card-name">Techno</div>
-            <div class="card-meta">Curated picks</div>
+          <div>
+            <p class="genre-title">Indie Rock</p>
+            <div class="genre-sub">Saved favourites: 3 songs</div>
           </div>
-        </article>
-
-        <article class="card">
-          <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=60')"></div>
-          <div class="card-body">
-            <div class="card-name">Drum & Bass</div>
-            <div class="card-meta">Curated picks</div>
-          </div>
-        </article>
+        </div>
+        <div class="chev" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M6 9l6 6 6-6" stroke="rgba(234,240,255,.85)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </summary>
+      <div class="panel">
+        <div class="songs">
+          <div class="song"><div class="song-title">Reptilia</div><div class="song-meta">The Strokes • Room on Fire</div></div>
+          <div class="song"><div class="song-title">Do I Wanna Know?</div><div class="song-meta">Arctic Monkeys • AM</div></div>
+          <div class="song"><div class="song-title">First Day of My Life</div><div class="song-meta">Bright Eyes • I’m Wide Awake…</div></div>
+        </div>
       </div>
-    </section>
+    </details>
 
-    <!-- Row 3 -->
-    <section class="row">
-      <div class="row-header">
-        <h2 class="row-title">Rock</h2>
-        <a class="row-link" href="#">View all</a>
-      </div>
-
-      <div class="rail">
-        <article class="card">
-          <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1514894786521-3122f7f4b2f0?auto=format&fit=crop&w=800&q=60')"></div>
-          <div class="card-body">
-            <div class="card-name">Indie Rock</div>
-            <div class="card-meta">Curated picks</div>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=800&q=60')"></div>
-          <div class="card-body">
-            <div class="card-name">Classic Rock</div>
-            <div class="card-meta">Curated picks</div>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=800&q=60')"></div>
-          <div class="card-body">
-            <div class="card-name">Metal</div>
-            <div class="card-meta">Curated picks</div>
-          </div>
-        </article>
-      </div>
-    </section>
+  </main>
+</body>
+</html>
   </main>
 </body>
 </html>
