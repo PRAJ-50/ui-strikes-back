@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Music Genres Dashboard</title>
+  <style>
+    :root{
+      --bg0:#070a12;
+      --bg1:#0b1020;
+      --card:rgba(255,255,255,.05);
+      --stroke:rgba(255,255,255,.10);
+      --text:#eaf0ff;
+      --muted:rgba(234,240,255,.72);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color:var(--text);
+      background: radial-gradient(1200px 600px at 10% 0%, #1b2a4a 0%, var(--bg1) 55%, var(--bg0) 100%);
+    }
+    a{color:var(--muted); text-decoration:none}
+    a:hover{text-decoration:underline}
+
+    .topbar{
+      position:sticky; top:0; z-index:10;
+      display:flex; align-items:center; justify-content:space-between;
+      gap:16px;
+      padding:18px 22px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      backdrop-filter: blur(10px);
+      background: rgba(7,10,18,.55);
+    }
+    .brand{display:flex; align-items:center; gap:12px}
+    .logo{
+      width:34px; height:34px; border-radius:10px;
+      background: linear-gradient(135deg, #7c3aed 0%, #22c55e 50%, #06b6d4 100%);
+      box-shadow: 0 10px 30px rgba(124,58,237,.25);
+      flex:0 0 auto;
+    }
+    .brand-title{font-weight:700; letter-spacing:.2px}
+    .brand-sub{font-size:12px; opacity:.78; margin-top:2px}
+
+    .user-area{display:flex; align-items:center; gap:10px; margin-left:auto}
+    .user-name{font-weight:600; opacity:.95; text-align:right}
+    .avatar{
+      width:34px; height:34px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: linear-gradient(135deg, rgba(255,255,255,.20), rgba(255,255,255,.06));
+      flex:0 0 auto;
+    }
+
+    .container{max-width:1100px; margin:0 auto; padding:18px 22px 44px}
+    .row{margin-top:18px}
+    .row-header{
+      display:flex; align-items:baseline; justify-content:space-between; gap:12px;
+    }
+    .row-title{font-size:18px; margin:0; letter-spacing:.2px}
+    .row-link{font-size:13px}
+
+    /* Horizontal card rail */
+    .rail{
+      margin-top:12px;
+      display:grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(220px, 1fr);
+      gap:14px;
+      overflow-x:auto;
+      padding-bottom:6px;
+      scroll-snap-type: x mandatory;
+    }
+    .card{
+      scroll-snap-align: start;
+      border-radius:16px;
+      overflow:hidden;
+      border:1px solid var(--stroke);
+      background: var(--card);
+      box-shadow: 0 18px 50px rgba(0,0,0,.35);
+      min-width:220px;
+    }
+    .card-img{
+      height:135px;
+      background-size:cover;
+      background-position:center;
+      filter:saturate(1.1) contrast(1.05);
+    }
+    .card-body{padding:12px}
+    .card-name{font-weight:700}
+    .card-meta{margin-top:4px; font-size:12px; opacity:.75}
+
+    /* Small screens */
+    @media (max-width:560px){
+      .topbar{padding:14px 14px}
+      .container{padding:14px 14px 34px}
+      .brand-sub{display:none}
+      .rail{grid-auto-columns: minmax(190px, 1fr)}
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Top bar with user's name on the top right -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo" aria-hidden="true"></div>
+      <div>
+        <div class="brand-title">Music Dashboard</div>
+        <div class="brand-sub">Browse by genre</div>
+      </div>
+    </div>
+
+    <div class="user-area">
+      <!-- Change this text to the user's name -->
+      <div class="user-name">Sam Taylor</div>
+      <div class="avatar" aria-label="User avatar" role="img"></div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Row 1 -->
+    <section class="row">
+      <div class="row-header">
+        <h2 class="row-title">Hip-Hop</h2>
+        <a class="row-link" href="#">View all</a>
+      </div>
+
+      <div class="rail">
+        <article class="card">
+          <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=800&q=60')"></div>
+          <div class="card-body">
+            <div class="card-name">Boom Bap</div>
+            <div class="card-meta">Curated picks</div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1521334726092-b509a19597c1?auto=format&fit=crop&w=800&q=60')"></div>
+          <div class="card-body">
+            <div class="card-name">Trap</div>
+            <div class="card-meta">Curated picks</div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=800&q=60')"></div>
+          <div class="card-body">
+            <div class="card-name">Lo-fi</div>
+            <div class="card-meta">Curated picks</div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Row 2 -->
+    <section class="row">
+      <div class="row-header">
+        <h2 class="row-title">Electronic</h2>
+        <a class="row-link" href="#">View all</a>
+      </div>
+
+      <div class="rail">
+        <article class="card">
+          <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=800&q=60')"></div>
+          <div class="card-body">
+            <div class="card-name">House</div>
+            <div class="card-meta">Curated picks</div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=800&q=60')"></div>
+          <div class="card-body">
+            <div class="card-name">Techno</div>
+            <div class="card-meta">Curated picks</div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=60')"></div>
+          <div class="card-body">
+            <div class="card-name">Drum & Bass</div>
+            <div class="card-meta">Curated picks</div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Row 3 -->
+    <section class="row">
+      <div class="row-header">
+        <h2 class="row-title">Rock</h2>
+        <a class="row-link" href="#">View all</a>
+      </div>
+
+      <div class="rail">
+        <article class="card">
+          <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1514894786521-3122f7f4b2f0?auto=format&fit=crop&w=800&q=60')"></div>
+          <div class="card-body">
+            <div class="card-name">Indie Rock</div>
+            <div class="card-meta">Curated picks</div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=800&q=60')"></div>
+          <div class="card-body">
+            <div class="card-name">Classic Rock</div>
+            <div class="card-meta">Curated picks</div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-img" style="background-image:url('https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=800&q=60')"></div>
+          <div class="card-body">
+            <div class="card-name">Metal</div>
+            <div class="card-meta">Curated picks</div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
